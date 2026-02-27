@@ -17,6 +17,8 @@
   "dependencies": {
     "@fastify/swagger": "9.7.0",
     "@fastify/swagger-ui": "5.2.5",
+    "@prisma/adapter-pg": "7.4.0",
+    "@prisma/client": "7.4.0",
     "@types/node": "^25.3.2",
     "dotenv": "17.3.1",
     "eslint-config-prettier": "10.1.8",
@@ -31,6 +33,7 @@
     "eslint": "9.39.2",
     "globals": "^17.3.0",
     "prettier": "3.8.1",
+    "prisma": "7.4.0",
     "tsx": "^4.21.0",
     "typescript-eslint": "^8.56.1"
   }
