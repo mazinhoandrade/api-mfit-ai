@@ -1,0 +1,22 @@
+{
+  "name": "api_treinos",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsx --watch src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.17.1",
+  "dependencies": {
+    "@types/node": "^25.3.2",
+    "typescript": "5.9.3"
+  },
+  "devDependencies": {
+    "eslint": "9.39.2",
+    "prettier": "3.8.1"
+  }
+}
