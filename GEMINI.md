@@ -1,63 +1,58 @@
-# API Treino Smart - Project Context
+#GEMINI.md
 
-## Project Overview
-A Node.js REST API for managing smart workout plans, built with TypeScript, Fastify, and Prisma. The system supports user authentication, workout plan creation with nested days and exercises, and session management.
+Este arquivo orienta o Gemini ao trabalhar com o codigo deste repositorio.
 
-### Tech Stack
-- **Runtime:** Node.js (v24.x)
-- **Language:** TypeScript
-- **Web Framework:** [Fastify](https://fastify.io/) (v5.7) with `fastify-type-provider-zod`
-- **ORM:** [Prisma](https://www.prisma.io/) (v7.4) with PostgreSQL
-- **Authentication:** [Better Auth](https://www.better-auth.com/) (v1.4)
-- **Validation:** [Zod](https://zod.dev/)
-- **Documentation:** Swagger/OpenAPI (via `@fastify/swagger`) with Scalar API Reference
+## Visao Geral
 
-## Building and Running
-### Prerequisites
-- Node.js (v24.x)
-- pnpm (v10.x)
-- PostgreSQL database
+API de treinos construida com Fastify 5, TypeScript, Prisma 7 e Better-Auth. Roda em Node.js 24.x com pnpm 10.30.0 (ambos obrigatorios via `engine-strict`).
 
-### Key Commands
-- `pnpm install`: Install dependencies.
-- `pnpm run dev`: Start development server with `tsx --watch`.
-- `pnpx prisma migrate dev`: Apply database migrations.
-- `pnpx prisma generate`: Regenerate Prisma client (output to `src/generated/prisma`).
-- `docker-compose up`: (Optional) Start infrastructure services if defined.
+## Comandos
 
-## Project Structure
-- `src/index.ts`: Main entry point, Fastify configuration, and plugin registration.
-- `src/routes/`: Route handlers. Uses Zod for type-safe requests/responses.
-- `src/usecases/`: Business logic layer. Classes that perform specific operations (e.g., `CreateWorkoutPlan`).
-- `src/lib/`: Core singleton instances:
-  - `db.ts`: Prisma database client.
-  - `auth.ts`: Better Auth configuration.
-- `src/schemas/`: Shared Zod schemas for validation and API documentation.
-- `src/errors/`: Custom error classes (e.g., `NotFoundError`).
-- `prisma/`: Database schema and migrations.
+```bash
+# Iniciar servidor de desenvolvimento (hot-reload na porta 8081)
+pnpm dev
 
-## Development Conventions
-### 1. Type-Safe Routing
-Routes should use `app.withTypeProvider<ZodTypeProvider>().route()` to ensure tight integration with Zod schemas for both request bodies and responses.
+# Iniciar PostgreSQL
+docker-compose up -d
 
-### 2. Use Case Pattern
-Encapsulate business logic in Use Case classes within `src/usecases/`.
-- Use local `InputDto` and `OutputDto` interfaces.
-- Handle database operations within transactions (`prisma.$transaction`) when involving multiple steps to ensure consistency.
+# Migrations do Prisma
+pnpm exec prisma migrate dev
+pnpm exec prisma generate
 
-### 3. Database Access
-Always import `prisma` from `../lib/db.js` (or relative path). Do not instantiate new Prisma clients in use cases or routes.
+# Lint
+pnpm exec eslint .
 
-### 4. Authentication
-- Session verification should be performed in the route handler using `auth.api.getSession({ headers: fromNodeHeaders(request.headers) })`.
-- Pass `userId` from the session to the use cases.
+# Formatacao
+pnpm exec prettier --write .
+```
 
-### 5. Error Handling
-- Use custom errors from `src/errors/` for domain-specific failures.
-- Map these errors to appropriate HTTP status codes in the route's `handler` catch block.
-- Always include `ErrorSchema` in the route's `response` schema for 4xx/5xx errors.
+Nao ha script de build ou teste configurado ainda. TypeScript compila para `./dist` via `tsc`.
 
-### 6. Imports
-Adhere to `eslint-plugin-simple-import-sort` conventions:
-1. Standard/Third-party imports.
-2. Project-relative imports (e.g., `../`, `./`).
+## Arquitetura
+
+### Padrao em camadas: Routes → Use Cases → Prisma
+
+- **Routes** (`src/routes/`) — Handlers de rotas Fastify. Registram schemas Zod para validacao de request/response via `fastify-type-provider-zod`. Extraem sessao de autenticacao e definem status HTTP.
+- **Use Cases** (`src/usecases/`) — Classes de logica de negocio. Recebem DTOs, usam transacoes Prisma para atomicidade (ex: desativar planos ativos antes de criar novos). Uma classe por caso de uso.
+- **Schemas** (`src/schemas/`) — Schemas Zod compartilhados entre rotas e OpenAPI docs. Definem tanto validacao de entrada quanto formato de resposta.
+- **Errors** (`src/errors/`) — Classes de erro customizadas (ex: `NotFoundError`) usadas nos use cases e tratadas nas rotas.
+
+### Autenticacao
+
+Better-Auth com adaptador Prisma (`src/lib/auth.ts`). Rotas de auth em `/api/auth/*`. Autenticacao baseada em sessao — rotas extraem a sessao do usuario via `auth.api.getSession()`.
+
+### Banco de Dados
+
+PostgreSQL 16 via Docker. Prisma client inicializado em `src/lib/db.ts`. Tipos gerados em `src/generated/prisma/` (gitignored). Schema em `prisma/schema.prisma`.
+
+### Documentacao da API
+
+Swagger JSON em `/swagger.json`, Scalar UI em `/docs`. Endpoints de auth sao mesclados no spec OpenAPI via plugin do Better-Auth.
+
+## Convencoes
+
+- **TypeScript strict** com target ES2024 e module resolution `nodenext`
+- **ESLint** com typescript-eslint, integracao com prettier e `simple-import-sort` (imports devem ser ordenados)
+- **Zod 4** para validacao (usa padrao `z.interface()`, nao `z.object()`)
+- **CORS** permite `http://localhost:3000` com credentials
+- Variaveis de ambiente: `PORT`, `DATABASE_URL`, `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`
