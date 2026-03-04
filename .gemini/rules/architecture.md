@@ -4,3 +4,7 @@
 - **NUNCA** faça commit sem a permissão explícita do usuário. Sempre aguarde o usuário pedir para commitar.
 
 ## Fastify: Rotas de API
+
+- Use cases nunca devem importar Fastify.
+- Routes nunca devem conter regra de negócio.
+- Nunca acessar Prisma diretamente dentro de routes.

@@ -1,6 +1,6 @@
-# CLAUDE.md
+# GEMINI.md
 
-Este arquivo fornece orientações ao Claude Code (claude.ai/code) ao trabalhar com código neste repositório.
+Este arquivo fornece orientações ao Gemini no Cursor ao trabalhar com código neste repositório.
 
 ## Stack
 
