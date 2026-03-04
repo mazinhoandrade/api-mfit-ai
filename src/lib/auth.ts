@@ -1,15 +1,16 @@
-import { PrismaPg } from "@prisma/adapter-pg";
+//import { PrismaPg } from "@prisma/adapter-pg";
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { openAPI } from "better-auth/plugins";
 
-import { PrismaClient } from "../generated/prisma/client.js";
+//import { PrismaClient } from "../generated/prisma/client.js";
+import { prisma } from "./db.js";
 
-const prisma = new PrismaClient({
+/* const prisma = new PrismaClient({
   adapter: new PrismaPg({
     connectionString: process.env.DATABASE_URL,
   }),
-});
+}); */
 
 export const auth = betterAuth({
   trustedOrigins: [process.env.FRONTEND_URL || "http://localhost:3000"],
