@@ -14,7 +14,9 @@ import z from "zod";
 import { WeekDay } from "../generated/prisma/enums.js";
 import { auth } from "../lib/auth.js";
 import { CreateWorkoutPlan } from "../usecases/create-workout-plan.js";
+import { GetUserTrainData } from "../usecases/get-user-train-data.js";
 import { ListWorkoutPlans } from "../usecases/list-workout-plans.js";
+import { UpsertUserTrainData } from "../usecases/upsert-user-train-data.js";
 
 const SYSTEM_PROMPT = `Você é um personal trainer virtual especialista em montagem de planos de treino personalizados.
 
@@ -103,8 +105,8 @@ export const aiRoutes = async (app: FastifyInstance) => {
               "Busca os dados de treino do usuário autenticado (peso, altura, idade, % gordura). Retorna null se não houver dados cadastrados.",
             inputSchema: z.object({}),
             execute: async () => {
-              /*               const getUserTrainData = new GetUserTrainData();
-              return getUserTrainData.execute({ userId }); */
+              const getUserTrainData = new GetUserTrainData();
+              return getUserTrainData.execute({ userId });
             },
           }),
           updateUserTrainData: tool({
@@ -125,11 +127,11 @@ export const aiRoutes = async (app: FastifyInstance) => {
                 .max(100)
                 .describe("Percentual de gordura corporal (0 a 100)"),
             }),
-            execute: async () => {},
-            /*             execute: async (params) => {
+
+            execute: async (params) => {
               const upsertUserTrainData = new UpsertUserTrainData();
               return upsertUserTrainData.execute({ userId, ...params });
-            }, */
+            },
           }),
           getWorkoutPlans: tool({
             description:
