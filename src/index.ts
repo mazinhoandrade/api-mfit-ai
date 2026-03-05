@@ -12,6 +12,7 @@ import {
 } from "fastify-type-provider-zod";
 
 import { auth } from "./lib/auth.js";
+import { homeRoutes } from "./routes/home.js";
 import { pingTestRoutes } from "./routes/ping-test.js";
 import { workoutPlanRoutes } from "./routes/workout-plan.js";
 
@@ -64,6 +65,7 @@ await app.register(fastifyApiReference, {
 
 //Routes
 await app.register(pingTestRoutes, { prefix: "/ping" });
+await app.register(homeRoutes, { prefix: "/home" });
 await app.register(workoutPlanRoutes, { prefix: "/workout-plans" });
 
 app.withTypeProvider<ZodTypeProvider>().route({
