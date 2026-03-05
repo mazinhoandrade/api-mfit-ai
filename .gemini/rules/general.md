@@ -51,3 +51,7 @@ Swagger UI disponível em `/docs` quando o servidor está rodando (porta 4949).
 
 - **SEMPRE** use Context7 para buscar documentações
 - **SEMPRE** use Serena para semantic code retrieval e editing tools.
+
+## Princípios de Modificação
+
+- **Preservação de Código:** Não altere, refatore ou remova código existente que não esteja diretamente relacionado à tarefa solicitada, a menos que seja estritamente necessário para o funcionamento da nova implementação ou explicitamente pedido pelo usuário.

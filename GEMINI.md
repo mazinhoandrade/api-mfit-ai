@@ -56,3 +56,8 @@ Swagger JSON em `/swagger.json`, Scalar UI em `/docs`. Endpoints de auth sao mes
 - **Zod 4** para validacao (usa padrao `z.interface()`, nao `z.object()`)
 - **CORS** permite `http://localhost:3000` com credentials
 - Variaveis de ambiente: `PORT`, `DATABASE_URL`, `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`
+
+## Princípios de Modificação
+
+- **Preservação de Código:** Não altere, refatore ou remova código existente que não esteja diretamente relacionado à tarefa solicitada, a menos que seja estritamente necessário para o funcionamento da nova implementação ou explicitamente pedido pelo usuário.
+
