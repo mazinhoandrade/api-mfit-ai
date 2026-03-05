@@ -13,6 +13,8 @@ import {
   CompleteWorkoutSessionBodySchema,
   CompleteWorkoutSessionSchema,
   ErrorSchema,
+  ListWorkoutPlansQuerySchema,
+  ListWorkoutPlansSchema,
   WorkoutDayDetailsSchema,
   WorkoutPlanDetailsSchema,
   WorkoutPlanSchema,
@@ -22,10 +24,56 @@ import { CompleteWorkoutSession } from "../usecases/complete-workout-session.js"
 import { CreateWorkoutPlan } from "../usecases/create-workout-plan.js";
 import { GetWorkoutDayDetails } from "../usecases/get-workout-day-details.js";
 import { GetWorkoutPlanDetails } from "../usecases/get-workout-plan-details.js";
+import { ListWorkoutPlans } from "../usecases/list-workout-plans.js";
 import { StartWorkoutSession } from "../usecases/start-workout-session.js";
 
-// ROUTE CREATE WORKOUT PLAN
 export const workoutPlanRoutes = async (app: FastifyInstance) => {
+  // ROUTE LIST WORKOUT PLAN
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: "GET",
+    url: "/",
+    schema: {
+      operationId: "listWorkoutPlans",
+      tags: ["Workout Plan"],
+      summary: "List workout plans",
+      querystring: ListWorkoutPlansQuerySchema,
+      response: {
+        200: ListWorkoutPlansSchema,
+        401: ErrorSchema,
+        500: ErrorSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      try {
+        const session = await auth.api.getSession({
+          headers: fromNodeHeaders(request.headers),
+        });
+        if (!session) {
+          return reply.status(401).send({
+            error: "Unauthorized",
+            code: "UNAUTHORIZED",
+          });
+        }
+
+        const listWorkoutPlans = new ListWorkoutPlans();
+        const result = await listWorkoutPlans.execute({
+          userId: session.user.id,
+          active: request.query.active,
+        });
+
+        return reply.status(200).send(result);
+      } catch (error) {
+        app.log.error(error);
+
+        return reply.status(500).send({
+          error: "Internal server error",
+          code: "INTERNAL_SERVER_ERROR",
+        });
+      }
+    },
+  });
+
+  // ROUTE CREATE WORKOUT PLAN
   app.withTypeProvider<ZodTypeProvider>().route({
     method: "POST",
     url: "/",
