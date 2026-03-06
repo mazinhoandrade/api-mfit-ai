@@ -78,7 +78,7 @@ export const workoutPlanRoutes = async (app: FastifyInstance) => {
     method: "POST",
     url: "/",
     schema: {
-      //operationId: "createWorkoutPlan",
+      operationId: "createWorkoutPlan",
       tags: ["Workout Plan"],
       summary: "Create workout plan",
       body: WorkoutPlanSchema.omit({ id: true }),
@@ -233,6 +233,7 @@ export const workoutPlanRoutes = async (app: FastifyInstance) => {
     method: "POST",
     url: "/:workoutPlanId/days/:workoutDayId/sessions",
     schema: {
+      operationId: "startWorkoutSession",
       tags: ["Workout Plan"],
       summary: "Start a workout session",
       params: z.object({
@@ -299,6 +300,7 @@ export const workoutPlanRoutes = async (app: FastifyInstance) => {
     method: "PATCH",
     url: "/:workoutPlanId/days/:workoutDayId/sessions/:sessionId",
     schema: {
+      operationId: "completeWorkoutSession",
       tags: ["Workout Plan"],
       summary: "Update a workout session",
       params: z.object({
