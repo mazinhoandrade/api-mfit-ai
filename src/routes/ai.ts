@@ -50,6 +50,7 @@ Escolha a divisão adequada com base nos dias disponíveis:
 - **4 dias/semana**: Upper/Lower (recomendado, cada grupo 2x/semana) ou ABCD (A: Peito+Tríceps, B: Costas+Bíceps, C: Pernas, D: Ombros+Abdômen)
 - **5 dias/semana**: PPLUL — Push/Pull/Legs + Upper/Lower (superior 3x, inferior 2x/semana)
 - **6 dias/semana**: PPL 2x — Push/Pull/Legs repetido
+- ** coloca os nome dos exercícios em portugês-brasileiro
 
 ### Princípios Gerais de Montagem
 - Músculos sinérgicos juntos (peito+tríceps, costas+bíceps)
