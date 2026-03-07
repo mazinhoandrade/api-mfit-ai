@@ -96,7 +96,7 @@ export const aiRoutes = async (app: FastifyInstance) => {
       const { messages } = request.body as { messages: UIMessage[] };
 
       const result = streamText({
-        model: google("gemini-2.5-pro"),
+        model: google("gemini-2.5-flash"),
         system: SYSTEM_PROMPT,
         messages: await convertToModelMessages(messages),
         stopWhen: stepCountIs(10),
