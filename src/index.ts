@@ -12,6 +12,7 @@ import {
 } from "fastify-type-provider-zod";
 
 import { auth } from "./lib/auth.js";
+import { env } from "./lib/env.js";
 import { aiRoutes } from "./routes/ai.js";
 import { homeRoutes } from "./routes/home.js";
 import { meRoutes } from "./routes/me.js";
@@ -35,8 +36,8 @@ await app.register(fastifySwagger, {
     },
     servers: [
       {
-        description: "locahost",
-        url: "http://localhost:8080",
+        description: "API Treino Smart",
+        url: env.API_BASE_URL,
       },
     ],
   },
@@ -44,7 +45,7 @@ await app.register(fastifySwagger, {
 });
 
 await app.register(fastifyCors, {
-  origin: process.env.FRONTEND_URL || "http://localhost:3000",
+  origin: [env.WEB_APP_BASE_URL],
   credentials: true,
 });
 
@@ -124,7 +125,7 @@ app.route({
 });
 
 try {
-  await app.listen({ port: Number(process.env.PORT) || 8001 });
+  await app.listen({ port: env.PORT });
 } catch (err) {
   app.log.error(err);
   process.exit(1);
