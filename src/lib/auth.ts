@@ -32,12 +32,4 @@ export const auth = betterAuth({
       domain: env.NODE_ENV === "production" ? ".mazinhodev.online" : undefined,
     },
   },
-  cookies: {
-    sessionToken: {
-      options: {
-        sameSite: "none",
-        secure: true,
-      },
-    },
-  },
 });
