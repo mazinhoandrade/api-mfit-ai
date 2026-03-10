@@ -1,0 +1,257 @@
+[33mcommit 61fca6ea20ea16b6ba3aa5de3b0703460209669d[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Mon Mar 9 20:48:55 2026 -0300
+
+    fix: atualiza .gitignore e ajusta Dockerfile para garantir a construção correta do ambiente
+
+[33mcommit ab55f5a134d65d5ec0b8297aaac87c15005621b1[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Mon Mar 9 19:49:16 2026 -0300
+
+    feat: adiciona suporte ao pino-pretty para formatação de logs e atualiza Dockerfile para construção e produção
+
+[33mcommit 6ecc23138f24dc4bca99c270caf291abc2987fdd[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Mon Mar 9 19:33:30 2026 -0300
+
+    fix: corrige caminho do diretório de build no .gitignore
+
+[33mcommit 66a8e4be94737ccffa1a6c15695c6205445fe9be[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Mon Mar 9 19:32:12 2026 -0300
+
+    feat: adiciona script de build ao package.json e atualiza .gitignore para incluir ./dist
+
+[33mcommit 8483b395e243563a2552747cbe6da931e6ee233f[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Mon Mar 9 19:26:21 2026 -0300
+
+    refactor: adiciona gerenciamento de variáveis de ambiente com validação usando Zod
+
+[33mcommit eb2a608088e41716051836ed2b9d3bd3748f552d[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Sat Mar 7 01:34:47 2026 -0300
+
+    fix: atualiza modelo do Google para "gemini-2.5-flash" na rota de IA
+
+[33mcommit 0b8882934d7aa54470127bf18ba70d0bb3da993d[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Sat Mar 7 00:00:10 2026 -0300
+
+    feat: substitui integração do OpenAI pela do Google e atualiza dependências
+
+[33mcommit 14af24fa2544034232ea2ff2179db38e933c23d0[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Fri Mar 6 18:41:57 2026 -0300
+
+    feat: adiciona descrição dos exercícios em português-brasileiro
+
+[33mcommit cef62922b3680556c5dbc36c732331b449156d8e[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Thu Mar 5 23:03:09 2026 -0300
+
+    fix: adiciona esquema oculto para rota de autenticação
+
+[33mcommit 2f14c097b0597d55cf5229b9fa7cb725c00ad8b7[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Thu Mar 5 22:19:10 2026 -0300
+
+    feat: adiciona operationId para rotas de criação e atualização de sessões de treino
+
+[33mcommit c5a59179fae18e101a1091da589764d11ce7164c[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Thu Mar 5 22:15:30 2026 -0300
+
+    fix: comenta configuração do servidor Figma no arquivo settings.json
+
+[33mcommit a04f7878454af6268c73dcfca61c53bfc5f898af[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Thu Mar 5 13:53:25 2026 -0300
+
+    feat: adiciona suporte a provedores sociais e configura URL base para autenticação
+
+[33mcommit 708d8d63eb45788ba28d9dd9938feb7c76ad0c3a[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Thu Mar 5 12:43:53 2026 -0300
+
+    feat: adiciona regra
+
+[33mcommit d2b5c53257dc30104c9bd523abf2ab91ccee7dc1[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Thu Mar 5 12:35:29 2026 -0300
+
+    fix: corrige aiRoutes
+
+[33mcommit 8645220a29c0594b7d2d90244293f605173f8d68[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Thu Mar 5 12:33:03 2026 -0300
+
+    feat: adiciona rota GET /me para obter e atualizar dados do usuário
+
+[33mcommit 9bc8a0c2804d3969ecdb592e2da9f3a41cd269fe[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Thu Mar 5 11:39:58 2026 -0300
+
+    feat: adiciona novos campos de peso, altura, idade e percentual de gordura ao modelo User
+
+[33mcommit 1b99a09875052e270d1cf1ad4609d9050bcf3f00[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Thu Mar 5 11:34:04 2026 -0300
+
+    feat: adiciona rota para interação com personal trainer AI e atualiza dependências
+
+[33mcommit 1f4e6823c36916041e4e950452a56d649a98cc79[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Thu Mar 5 10:57:46 2026 -0300
+
+    feat: adiciona rota para listar planos de treino com validação e tratamento de erros
+
+[33mcommit 6ab175affea0d8548da662288e58ed139edfecb5[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Thu Mar 5 10:44:05 2026 -0300
+
+    feat: adiciona rota para estatísticas de treino com esquemas de validação
+
+[33mcommit 7853af0210cdf9d5b1b4ec91dde691a2907d7c29[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Thu Mar 5 10:06:30 2026 -0300
+
+    feat: adiciona rota para obter detalhes do dia de treino com validação e tratamento de erros
+
+[33mcommit efc50ffdb4b60fdfeb92e8ab733e5db4d358b3d4[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Thu Mar 5 09:22:18 2026 -0300
+
+    feat: adiciona rota para obter detalhes do plano de treino
+
+[33mcommit 7a5c7ed5476671d1eecc408bf14ca9dc37c6118b[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Wed Mar 4 23:50:34 2026 -0300
+
+    feat: adiciona nova dependência dayjs e implementa rota home com esquema de dados
+
+[33mcommit 0650132a2da15cb5efa3c41a735b7920601e507b[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Wed Mar 4 22:38:20 2026 -0300
+
+    feat: adiciona rota para completar sessão de treino com validação e tratamento de erros
+
+[33mcommit bd761e8a86f3f79c2be2ad631e160019067532fd[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Wed Mar 4 21:53:21 2026 -0300
+
+    feat: implementa nova rota para iniciar sessão de treino e adiciona novos erros personalizados
+
+[33mcommit 559bbd88a688ee284a5e3f336254b607ee09855b[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Wed Mar 4 18:55:56 2026 -0300
+
+    feat: adiciona template de prompt para criar rota de API de sessão de treino
+
+[33mcommit 042ca2c00cbec57ea96358102df43feaf1f57148[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Wed Mar 4 18:33:57 2026 -0300
+
+    fix: Atualize o tipo coverImageUrl para remover valores nulos.
+
+[33mcommit b3ff4edbb2a721818ac098c17dc2d9261e65152e[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Wed Mar 4 18:28:22 2026 -0300
+
+    refactor: alterar as regras de general.md e architecture.md
+
+[33mcommit 6a3ebc2ba9af90d95e196fdc3b150b93022348f1[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Wed Mar 4 18:16:46 2026 -0300
+
+    feat: adiciona coverImageUrl na tabela de workoutDay e workoutPlan
+
+[33mcommit 210e936abbf75bf1c50cae788731b5c287f76d1a[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Wed Mar 4 18:15:09 2026 -0300
+
+    refactor: alterar as regras do gemini.md
+
+[33mcommit a15136f2bcd9be824c1dedb2c64464b219a0614a[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Wed Mar 4 13:53:11 2026 -0300
+
+    refactor: alterar rules de pasta
+
+[33mcommit b3c3c99aad14de51e22eed6b2e273a03f31a78d5[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Wed Mar 4 11:16:10 2026 -0300
+
+    refactor: refatora as rotas de ping e workut plan na pagina de index
+
+[33mcommit 83c511933c80c2ff4de774f31f204449c5b59c42[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Wed Mar 4 11:12:10 2026 -0300
+
+    feat: adiciona workout session table e o delete cascade no schema
+
+[33mcommit 094eb0344eb87ecd23c2eb129f98c1dd8ab9a96c[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Wed Mar 4 10:15:32 2026 -0300
+
+    feat: adiciona as regas para os agentes ia
+
+[33mcommit 33c97c0b0425f749fa6d3967b594eea975319810[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Wed Mar 4 10:14:49 2026 -0300
+
+    feat: adiciona a criação de workout plan e sua endpoint
+
+[33mcommit c5271a611d8b65074d686ec6a52c0366a3e61f37[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Fri Feb 27 21:55:39 2026 -0300
+
+    chore: adiciona o scalar no projeto
+
+[33mcommit 9c0e4360cb1ed8e7c7aff68a4e9f51223e1c3ca1[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Fri Feb 27 21:44:32 2026 -0300
+
+    chore: adiciona o better-auth no projeto
+
+[33mcommit 51d73fcf40cbd34ab89bfdb461ef62a954f80846[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Fri Feb 27 20:44:31 2026 -0300
+
+    feat: adiciona o prisma com os schema no projeto
+
+[33mcommit 12459580c9eefd70cdef5b27f6a6c589a229d364[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Fri Feb 27 18:28:23 2026 -0300
+
+    chore: adiciona o fastify/swagger e fastify/swagger-ui no projeto
+
+[33mcommit 2e4225fab853fdf4be180cb64d2bbcc32c86734a[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Fri Feb 27 18:09:20 2026 -0300
+
+    chore: adiciona o fastify-type e o zod no projeto
+
+[33mcommit b5989d2027314c09d7b6bc2005cbc78c61603c8d[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Fri Feb 27 17:50:56 2026 -0300
+
+    feat: adiciona fastify
+
+[33mcommit 5232bee210bb11e14b50cf512c7c4da47b1bb897[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Fri Feb 27 17:28:57 2026 -0300
+
+    chore: adiciona as configurações do eslint e prettier
+
+[33mcommit 442d5676b59f417ab6cff05ec4fceee5bc827ce8[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Fri Feb 27 17:04:05 2026 -0300
+
+    chore: adiciona versão do node no package.json
+
+[33mcommit 83bbc821d89b914dd2e4c568326c36f699c4cbcf[m
+Author: Mazinho <irismarandrade94@gmail.com>
+Date:   Fri Feb 27 16:46:21 2026 -0300
+
+    chore: adiciona typescript e configurar tsx

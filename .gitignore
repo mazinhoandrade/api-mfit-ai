@@ -1,7 +1,8 @@
 node_modules
 .env
 /src/generated/prisma
-
+.gemini/
+GEMINI.md
 /src/generated/prisma
 
 # Build
