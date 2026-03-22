@@ -1,5 +1,5 @@
 import { NotFoundError } from "../errors/index.js";
-import { WeekDay } from "../generated/prisma/enums.js";
+import { ExerciseMetricType, WeekDay } from "../generated/prisma/enums.js";
 import { prisma } from "../lib/db.js";
 
 interface InputDto {
@@ -14,9 +14,11 @@ interface InputDto {
     exercises: Array<{
       order: number;
       name: string;
-      sets: number;
-      reps: number;
-      restTimeInSeconds: number;
+      sets: number | null;
+      reps: number | null;
+      metricType: ExerciseMetricType;
+      suggestedWeight: number | null;
+      restTimeInSeconds: number | null;
     }>;
   }>;
 }
@@ -33,22 +35,25 @@ export interface OutputDto {
     exercises: Array<{
       order: number;
       name: string;
-      sets: number;
-      reps: number;
-      restTimeInSeconds: number;
+      sets: number | null;
+      reps: number | null;
+      suggestedWeight: number | null;
+      metricType: ExerciseMetricType;
+      restTimeInSeconds: number | null;
     }>;
   }>;
 }
 
 export class CreateWorkoutPlan {
   async execute(dto: InputDto): Promise<OutputDto> {
-    const existingWorkoutPlan = await prisma.workoutPlan.findFirst({
-      where: {
-        isActive: true,
-      },
-    });
     // Transaction to ensure consistency
     return prisma.$transaction(async (tx) => {
+      const existingWorkoutPlan = await tx.workoutPlan.findFirst({
+        where: {
+          userId: dto.userId,
+          isActive: true,
+        },
+      });
       if (existingWorkoutPlan) {
         await tx.workoutPlan.update({
           where: {
@@ -75,6 +80,8 @@ export class CreateWorkoutPlan {
               exercises: {
                 create: workoutDay.exercises.map((exercise) => ({
                   name: exercise.name,
+                  metricType: exercise.metricType,
+                  suggestedWeight: exercise.suggestedWeight,
                   order: exercise.order,
                   sets: exercise.sets,
                   reps: exercise.reps,
@@ -110,6 +117,8 @@ export class CreateWorkoutPlan {
           coverImageUrl: day.coverImageUrl ?? undefined,
           exercises: day.exercises.map((exercise) => ({
             order: exercise.order,
+            metricType: exercise.metricType,
+            suggestedWeight: exercise.suggestedWeight,
             name: exercise.name,
             sets: exercise.sets,
             reps: exercise.reps,

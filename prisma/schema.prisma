@@ -14,23 +14,57 @@ datasource db {
 }
 
 model User {
-  id                  String        @id
-  workoutPlans        WorkoutPlan[]
-  name                String
-  email               String
-  emailVerified       Boolean       @default(false)
-  image               String?
-  createdAt           DateTime      @default(now())
-  updatedAt           DateTime      @updatedAt
-  sessions            Session[]
-  accounts            Account[]
-  weightInGrams       Int?
-  heightInCentimeters Int?
-  age                 Int?
-  bodyFatPercentage   Int? // 100 representa 100% 
+  id              String           @id
+  workoutPlans    WorkoutPlan[]
+  name            String
+  email           String
+  emailVerified   Boolean          @default(false)
+  image           String?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  workoutSessions WorkoutSession[]
+  sessions        Session[]
+  accounts        Account[]
+  bodyMetrics     BodyMetric[]
+  dietLogs        DietLog[]
+  aianalyses      AIAnalysis[]
 
   @@unique([email])
   @@map("user")
+}
+
+model BodyMetric {
+  id                  String @id @default(uuid())
+  userId              String
+  age                 Int?
+  weightInGrams       Int?
+  heightInCentimeters Int?
+
+  bodyFatPercentage Int? // 100 representa 100% 
+  createdAt         DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model DietLog {
+  id        String   @id @default(uuid())
+  userId    String
+  calories  Int
+  protein   Int
+  carbs     Int
+  fat       Int
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model AIAnalysis {
+  id        String   @id @default(uuid())
+  userId    String
+  content   Json
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model WorkoutPlan {
@@ -69,27 +103,76 @@ model WorkoutDay {
   updatedAt                  DateTime          @updatedAt @db.Timestamptz()
 }
 
+enum ExerciseMetricType {
+  WEIGHT_REPS
+  REPS_ONLY
+  TIME
+  DISTANCE_TIME
+}
+
 model WorkoutExercise {
-  id                String     @id @default(uuid())
+  id                String             @id @default(uuid())
   name              String
   order             Int
   workoutDayId      String
-  workoutDay        WorkoutDay @relation(fields: [workoutDayId], references: [id], onDelete: Cascade)
-  sets              Int
-  reps              Int
-  restTimeInSeconds Int
-  createdAt         DateTime   @default(now()) @db.Timestamptz()
-  updatedAt         DateTime   @updatedAt @db.Timestamptz()
+  workoutDay        WorkoutDay         @relation(fields: [workoutDayId], references: [id], onDelete: Cascade)
+  metricType        ExerciseMetricType
+  suggestedWeight   Int?
+  sets              Int?
+  reps              Int?
+  restTimeInSeconds Int?
+  notes             String?
+  durationInSeconds Int?
+  distanceInMeters  Int?
+  createdAt         DateTime           @default(now()) @db.Timestamptz()
+  updatedAt         DateTime           @updatedAt @db.Timestamptz()
+  exerciseLogs      ExerciseLog[]
+}
+
+model ExerciseLog {
+  id         String   @id @default(uuid())
+  sessionId  String
+  exerciseId String
+  notes      String?
+  createdAt  DateTime @default(now())
+
+  session  WorkoutSession  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  exercise WorkoutExercise @relation(fields: [exerciseId], references: [id])
+
+  sets ExerciseSet[]
+
+  @@unique([sessionId, exerciseId])
+}
+
+model ExerciseSet {
+  id    String      @id @default(uuid())
+  logId String
+  log   ExerciseLog @relation(fields: [logId], references: [id], onDelete: Cascade)
+
+  order             Int
+  weight            Int?
+  reps              Int?
+  durationInSeconds Int?
+  distanceInMeters  Int?
+  completed         Boolean @default(false)
+
+  createdAt DateTime @default(now())
 }
 
 model WorkoutSession {
-  id           String     @id @default(uuid())
+  id           String        @id @default(uuid())
   workoutDayId String
-  workoutDay   WorkoutDay @relation(fields: [workoutDayId], references: [id], onDelete: Cascade)
-  startedAt    DateTime   @db.Timestamptz()
-  completedAt  DateTime?  @db.Timestamptz()
-  createdAt    DateTime   @default(now()) @db.Timestamptz()
-  updatedAt    DateTime   @updatedAt @db.Timestamptz()
+  workoutDay   WorkoutDay    @relation(fields: [workoutDayId], references: [id], onDelete: Cascade)
+  userId       String
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  startedAt    DateTime      @db.Timestamptz()
+  completedAt  DateTime?     @db.Timestamptz()
+  isActive     Boolean       @default(true)
+  createdAt    DateTime      @default(now()) @db.Timestamptz()
+  updatedAt    DateTime      @updatedAt @db.Timestamptz()
+  exerciseLogs ExerciseLog[]
+
+  @@unique([userId, workoutDayId, isActive])
 }
 
 model Session {

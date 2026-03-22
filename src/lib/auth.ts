@@ -16,6 +16,10 @@ import { env } from "./env.js";
 export const auth = betterAuth({
   baseURL: env.API_BASE_URL,
   trustedOrigins: [env.WEB_APP_BASE_URL],
+  secret: env.BETTER_AUTH_SECRET,
+  emailAndPassword: {
+    enabled: true,
+  },
   socialProviders: {
     google: {
       clientId: env.GOOGLE_CLIENT_ID,

@@ -27,15 +27,23 @@ export class CompleteWorkoutSession {
       throw new NotFoundError("Workout plan not found or not owned by user");
     }
 
-    const workoutDay = await prisma.workoutDay.findUnique({
-      where: { id: dto.workoutDayId, workoutPlanId: dto.workoutPlanId },
+    const workoutDay = await prisma.workoutDay.findFirst({
+      where: {
+        id: dto.workoutDayId,
+        workoutPlanId: dto.workoutPlanId,
+      },
     });
+
     if (!workoutDay) {
       throw new NotFoundError("Workout day not found in this plan");
     }
 
     const session = await prisma.workoutSession.findUnique({
-      where: { id: dto.sessionId, workoutDayId: dto.workoutDayId },
+      where: {
+        id: dto.sessionId,
+        workoutDayId: dto.workoutDayId,
+        userId: dto.userId,
+      },
     });
     if (!session) {
       throw new NotFoundError("Workout session not found in this day");
@@ -44,7 +52,8 @@ export class CompleteWorkoutSession {
     const updatedSession = await prisma.workoutSession.update({
       where: { id: dto.sessionId },
       data: {
-        completedAt: dto.completedAt,
+        isActive: false,
+        completedAt: new Date(),
       },
     });
 

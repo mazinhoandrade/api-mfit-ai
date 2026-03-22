@@ -3,6 +3,7 @@ import {
   NotFoundError,
   WorkoutPlanNotActiveError,
 } from "../errors/index.js";
+import { Prisma } from "../generated/prisma/client.js";
 import { prisma } from "../lib/db.js";
 
 interface InputDto {
@@ -38,36 +39,49 @@ export class StartWorkoutSession {
       throw new WorkoutPlanNotActiveError("Workout plan is not active");
     }
 
-    const workoutDay = await prisma.workoutDay.findUnique({
-      where: { id: dto.workoutDayId, workoutPlanId: dto.workoutPlanId },
-    });
+    const workoutDay = workoutPlan.workoutDays[0];
     if (!workoutDay) {
       throw new NotFoundError("Workout day not found in this plan");
     }
-
-    // Check if there's an ongoing session for this day
-    // The requirement says: "Caso o dia recebido já tenha uma sessão iniciada (startedAt presente), retorne 409."
-    // Since startedAt is mandatory in our schema, we interpret this as "if there's a session that hasn't been completed yet"
-    const existingSession = await prisma.workoutSession.findFirst({
-      where: {
-        workoutDayId: dto.workoutDayId,
-      },
-    });
-
-    if (existingSession) {
-      throw new ConflictError("Workout session already started for this day");
+    if (workoutDay.isRest) {
+      throw new ConflictError("Workout day is a rest day");
     }
 
-    const session = await prisma.workoutSession.create({
-      data: {
-        id: crypto.randomUUID(),
-        workoutDayId: dto.workoutDayId,
-        startedAt: new Date(),
-      },
-    });
+    try {
+      const session = await prisma.workoutSession.create({
+        data: {
+          id: crypto.randomUUID(),
+          workoutDayId: dto.workoutDayId,
+          userId: dto.userId,
+          isActive: true,
+          startedAt: new Date(),
+        },
+      });
 
-    return {
-      userWorkoutSessionId: session.id,
-    };
+      return {
+        userWorkoutSessionId: session.id,
+      };
+    } catch (error) {
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === "P2002" // unique constraint
+      ) {
+        const existingSession = await prisma.workoutSession.findFirst({
+          where: {
+            workoutDayId: dto.workoutDayId,
+            userId: dto.userId,
+            isActive: true,
+          },
+        });
+
+        if (existingSession) {
+          return {
+            userWorkoutSessionId: existingSession.id,
+          };
+        }
+      }
+
+      throw error;
+    }
   }
 }

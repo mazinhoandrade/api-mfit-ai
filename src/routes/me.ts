@@ -81,10 +81,11 @@ export const meRoutes = async (app: FastifyInstance) => {
         const upsertUserTrainData = new UpsertUserTrainData();
         const result = await upsertUserTrainData.execute({
           userId: session.user.id,
-          weightInGrams: request.body.weightInGrams,
-          heightInCentimeters: request.body.heightInCentimeters,
-          age: request.body.age,
-          bodyFatPercentage: request.body.bodyFatPercentage,
+          name: request.body.name,
+          // weightInGrams: request.body.weightInGrams,
+          // heightInCentimeters: request.body.heightInCentimeters,
+          // age: request.body.age,
+          // bodyFatPercentage: request.body.bodyFatPercentage,
         });
 
         return reply.status(200).send(result);

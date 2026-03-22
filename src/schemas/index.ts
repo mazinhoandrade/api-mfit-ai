@@ -1,6 +1,6 @@
 import z from "zod";
 
-import { WeekDay } from "../generated/prisma/enums.js";
+import { ExerciseMetricType, WeekDay } from "../generated/prisma/enums.js";
 
 export const ErrorSchema = z.object({
   error: z.string(),
@@ -56,9 +56,23 @@ export const WorkoutPlanSchema = z.object({
         z.object({
           order: z.number().min(0),
           name: z.string().trim().min(1),
-          sets: z.number().min(1),
-          reps: z.number().min(1),
-          restTimeInSeconds: z.number().min(1),
+          sets: z
+            .number()
+            .optional()
+            .transform((v) => v ?? null),
+          reps: z
+            .number()
+            .optional()
+            .transform((v) => v ?? null),
+          suggestedWeight: z
+            .number()
+            .optional()
+            .transform((v) => v ?? null),
+          metricType: z.enum(ExerciseMetricType),
+          restTimeInSeconds: z
+            .number()
+            .optional()
+            .transform((v) => v ?? null),
         }),
       ),
     }),
@@ -167,25 +181,44 @@ export const HomeDataSchema = z.object({
 });
 
 export const UpsertUserTrainDataBodySchema = z.object({
-  weightInGrams: z.number().min(0),
-  heightInCentimeters: z.number().min(0),
-  age: z.number().min(0),
-  bodyFatPercentage: z.number().min(0).max(100),
+  name: z.string(),
+  // weightInGrams: z.number().min(0),
+  // heightInCentimeters: z.number().min(0),
+  // age: z.number().min(0),
+  // bodyFatPercentage: z.number().min(0).max(100),
 });
 
 export const UserTrainDataSchema = z.object({
   userId: z.string(),
-  userName: z.string(),
-  weightInGrams: z.number(),
-  heightInCentimeters: z.number(),
-  age: z.number(),
-  bodyFatPercentage: z.number().min(0).max(100),
+  name: z.string(),
+  // weightInGrams: z.number(),
+  // heightInCentimeters: z.number(),
+  // age: z.number(),
+  // bodyFatPercentage: z.number().min(0).max(100),
 });
 
 export const UpsertUserTrainDataSchema = z.object({
   userId: z.string(),
-  weightInGrams: z.number(),
-  heightInCentimeters: z.number(),
-  age: z.number(),
-  bodyFatPercentage: z.number(),
+  name: z.string(),
+  // weightInGrams: z.number(),
+  // heightInCentimeters: z.number(),
+  // age: z.number(),
+  // bodyFatPercentage: z.number(),
+});
+
+export const setLogExerciseBody = z.object({
+  weight: z.number().optional(),
+  reps: z.number().optional(),
+  durationInSeconds: z.number().optional(),
+  distanceInMeters: z.number().optional(),
+});
+
+export const setLogExerciseResponse = z.object({
+  id: z.string(),
+  order: z.number(),
+});
+
+export const setLogExerciseCompleteResponse = z.object({
+  id: z.string(),
+  completed: z.boolean,
 });
