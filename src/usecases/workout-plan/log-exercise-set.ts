@@ -112,7 +112,6 @@ export class LogExerciseSet {
         reps: dto.reps,
         durationInSeconds: dto.durationInSeconds,
         distanceInMeters: dto.distanceInMeters,
-        completed: true,
       },
     });
 

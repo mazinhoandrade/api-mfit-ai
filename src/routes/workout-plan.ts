@@ -23,14 +23,14 @@ import {
   WorkoutPlanSchema,
   WorkoutSessionSchema,
 } from "../schemas/index.js";
-import { CompleteExerciseSet } from "../usecases/complete-exercise-set.js";
-import { CompleteWorkoutSession } from "../usecases/complete-workout-session.js";
-import { CreateWorkoutPlan } from "../usecases/create-workout-plan.js";
-import { GetWorkoutDayDetails } from "../usecases/get-workout-day-details.js";
-import { GetWorkoutPlanDetails } from "../usecases/get-workout-plan-details.js";
-import { ListWorkoutPlans } from "../usecases/list-workout-plans.js";
-import { LogExerciseSet } from "../usecases/log-exercise-set.js";
-import { StartWorkoutSession } from "../usecases/start-workout-session.js";
+import { CompleteExerciseSet } from "../usecases/workout-plan/complete-exercise-set.js";
+import { CompleteWorkoutSession } from "../usecases/workout-plan/complete-workout-session.js";
+import { CreateWorkoutPlan } from "../usecases/workout-plan/create-workout-plan.js";
+import { GetWorkoutDayDetails } from "../usecases/workout-plan/get-workout-day-details.js";
+import { GetWorkoutPlanDetails } from "../usecases/workout-plan/get-workout-plan-details.js";
+import { ListWorkoutPlans } from "../usecases/workout-plan/list-workout-plans.js";
+import { LogExerciseSet } from "../usecases/workout-plan/log-exercise-set.js";
+import { StartWorkoutSession } from "../usecases/workout-plan/start-workout-session.js";
 
 export const workoutPlanRoutes = async (app: FastifyInstance) => {
   // ROUTE LIST WORKOUT PLAN

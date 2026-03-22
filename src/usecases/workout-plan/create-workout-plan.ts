@@ -1,6 +1,6 @@
-import { NotFoundError } from "../errors/index.js";
-import { ExerciseMetricType, WeekDay } from "../generated/prisma/enums.js";
-import { prisma } from "../lib/db.js";
+import { NotFoundError } from "../../errors/index.js";
+import { ExerciseMetricType, WeekDay } from "../../generated/prisma/enums.js";
+import { prisma } from "../../lib/db.js";
 
 interface InputDto {
   userId: string;
@@ -14,11 +14,11 @@ interface InputDto {
     exercises: Array<{
       order: number;
       name: string;
-      sets: number | null;
-      reps: number | null;
+      sets?: number | null;
+      reps?: number | null;
       metricType: ExerciseMetricType;
-      suggestedWeight: number | null;
-      restTimeInSeconds: number | null;
+      suggestedWeight?: number | null;
+      restTimeInSeconds?: number | null;
     }>;
   }>;
 }

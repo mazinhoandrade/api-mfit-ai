@@ -2,9 +2,9 @@ import {
   ConflictError,
   NotFoundError,
   WorkoutPlanNotActiveError,
-} from "../errors/index.js";
-import { Prisma } from "../generated/prisma/client.js";
-import { prisma } from "../lib/db.js";
+} from "../../errors/index.js";
+import { Prisma } from "../../generated/prisma/client.js";
+import { prisma } from "../../lib/db.js";
 
 interface InputDto {
   userId: string;

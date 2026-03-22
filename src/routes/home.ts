@@ -6,7 +6,7 @@ import z from "zod";
 import { NotFoundError } from "../errors/index.js";
 import { auth } from "../lib/auth.js";
 import { ErrorSchema, HomeDataSchema } from "../schemas/index.js";
-import { GetHomeData } from "../usecases/get-home-data.js";
+import { GetHomeData } from "../usecases/home/get-home-data.js";
 
 // ROUTE GET HOME DATA
 export const homeRoutes = async (app: FastifyInstance) => {

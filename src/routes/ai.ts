@@ -11,12 +11,13 @@ import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import z from "zod";
 
-import { WeekDay } from "../generated/prisma/enums.js";
+import { ExerciseMetricType, WeekDay } from "../generated/prisma/enums.js";
 import { auth } from "../lib/auth.js";
-import { CreateWorkoutPlan } from "../usecases/create-workout-plan.js";
-import { GetUserTrainData } from "../usecases/get-user-train-data.js";
-import { ListWorkoutPlans } from "../usecases/list-workout-plans.js";
-import { UpsertUserTrainData } from "../usecases/upsert-user-train-data.js";
+import { prisma } from "../lib/db.js";
+import { GetUserTrainData } from "../usecases/me/get-user-train-data.js";
+import { UpsertUserTrainData } from "../usecases/me/upsert-user-train-data.js";
+import { CreateWorkoutPlan } from "../usecases/workout-plan/create-workout-plan.js";
+import { ListWorkoutPlans } from "../usecases/workout-plan/list-workout-plans.js";
 
 const SYSTEM_PROMPT = `Você é um personal trainer virtual especialista em montagem de planos de treino personalizados.
 
@@ -114,24 +115,35 @@ export const aiRoutes = async (app: FastifyInstance) => {
             description:
               "Atualiza os dados de treino do usuário autenticado. O peso deve ser em gramas (converter kg * 1000).",
             inputSchema: z.object({
+              name: z.string().optional().describe("Nome do usuário"),
               weightInGrams: z
                 .number()
+                .optional()
                 .describe("Peso do usuário em gramas (ex: 70kg = 70000)"),
               heightInCentimeters: z
                 .number()
+                .optional()
                 .describe("Altura do usuário em centímetros"),
-              age: z.number().describe("Idade do usuário"),
+              age: z.number().optional().describe("Idade do usuário"),
               bodyFatPercentage: z
                 .number()
                 .int()
                 .min(0)
                 .max(100)
+                .optional()
                 .describe("Percentual de gordura corporal (0 a 100)"),
             }),
 
             execute: async (params) => {
               const upsertUserTrainData = new UpsertUserTrainData();
-              return upsertUserTrainData.execute({ userId, ...params });
+              const user = await prisma.user.findUnique({
+                where: { id: userId },
+              });
+              return upsertUserTrainData.execute({
+                userId,
+                name: params.name ?? user?.name ?? "",
+                ...params,
+              });
             },
           }),
           getWorkoutPlans: tool({
@@ -185,6 +197,13 @@ export const aiRoutes = async (app: FastifyInstance) => {
                             .describe(
                               "Tempo de descanso entre séries em segundos",
                             ),
+                          metricType: z
+                            .enum(ExerciseMetricType)
+                            .describe("Tipo de métrica do exercício"),
+                          suggestedWeight: z
+                            .number()
+                            .optional()
+                            .describe("Peso sugerido em gramas"),
                         }),
                       )
                       .describe(

@@ -1,5 +1,5 @@
-import { WeekDay } from "../generated/prisma/enums.js";
-import { prisma } from "../lib/db.js";
+import { WeekDay } from "../../generated/prisma/enums.js";
+import { prisma } from "../../lib/db.js";
 
 interface InputDto {
   userId: string;
@@ -21,9 +21,9 @@ interface OutputDto {
       id: string;
       order: number;
       name: string;
-      sets: number;
-      reps: number;
-      restTimeInSeconds: number;
+      sets: number | null;
+      reps: number | null;
+      restTimeInSeconds: number | null;
     }>;
   }>;
 }

@@ -1,4 +1,4 @@
-import { prisma } from "../lib/db.js";
+import { prisma } from "../../lib/db.js";
 
 interface InputDto {
   userId: string;
@@ -12,9 +12,11 @@ export interface OutputDto {
 
 export class UpsertUserTrainData {
   async execute(dto: InputDto): Promise<OutputDto> {
+    const { userId, name } = dto;
+
     const user = await prisma.user.update({
-      where: { id: dto.userId },
-      data: dto,
+      where: { id: userId },
+      data: { name },
     });
 
     return {

@@ -1,9 +1,9 @@
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc.js";
 
-import { NotFoundError, UnauthorizedError } from "../errors/index.js";
-import { WeekDay } from "../generated/prisma/enums.js";
-import { prisma } from "../lib/db.js";
+import { NotFoundError, UnauthorizedError } from "../../errors/index.js";
+import { WeekDay } from "../../generated/prisma/enums.js";
+import { prisma } from "../../lib/db.js";
 
 dayjs.extend(utc);
 
@@ -24,9 +24,9 @@ export interface OutputDto {
     name: string;
     order: number;
     workoutDayId: string;
-    sets: number;
-    reps: number;
-    restTimeInSeconds: number;
+    sets: number | null;
+    reps: number | null;
+    restTimeInSeconds: number | null;
   }>;
   weekDay: WeekDay;
   sessions: Array<{
