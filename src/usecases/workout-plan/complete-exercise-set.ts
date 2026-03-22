@@ -1,5 +1,5 @@
-import { ConflictError, NotFoundError } from "../errors/index.js";
-import { prisma } from "../lib/db.js";
+import { ConflictError, NotFoundError } from "../../errors/index.js";
+import { prisma } from "../../lib/db.js";
 
 interface InputDto {
   setId: string;

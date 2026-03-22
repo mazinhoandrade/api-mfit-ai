@@ -1,5 +1,5 @@
-import { ConflictError, NotFoundError } from "../errors/index.js";
-import { prisma } from "../lib/db.js";
+import { ConflictError, NotFoundError } from "../../errors/index.js";
+import { prisma } from "../../lib/db.js";
 
 interface InputDto {
   userId: string;
@@ -18,7 +18,6 @@ interface OutputDto {
 
 export class LogExerciseSet {
   async execute(dto: InputDto): Promise<OutputDto> {
-    // 🔍 1. valida sessão
     const session = await prisma.workoutSession.findFirst({
       where: {
         id: dto.sessionId,
@@ -34,7 +33,6 @@ export class LogExerciseSet {
       throw new ConflictError("Workout session already finished");
     }
 
-    // 🔍 2. valida exercício
     const exercise = await prisma.workoutExercise.findUnique({
       where: { id: dto.exerciseId },
     });
@@ -47,7 +45,6 @@ export class LogExerciseSet {
       throw new ConflictError("Exercise does not belong to this session");
     }
 
-    // 🧠 3. valida tipo de exercício
     if (exercise.metricType === "WEIGHT_REPS") {
       if (!dto.weight || !dto.reps) {
         throw new ConflictError("Weight and reps are required");
@@ -72,7 +69,6 @@ export class LogExerciseSet {
       }
     }
 
-    // 🔍 4. cria ou pega log
     let log = await prisma.exerciseLog.findUnique({
       where: {
         sessionId_exerciseId: {
@@ -91,7 +87,6 @@ export class LogExerciseSet {
       });
     }
 
-    // 🔢 5. calcula próxima ordem
     const lastSet = await prisma.exerciseSet.findFirst({
       where: {
         logId: log.id,
@@ -103,7 +98,6 @@ export class LogExerciseSet {
 
     const nextOrder = (lastSet?.order ?? 0) + 1;
 
-    // 💾 6. cria set
     const set = await prisma.exerciseSet.create({
       data: {
         logId: log.id,

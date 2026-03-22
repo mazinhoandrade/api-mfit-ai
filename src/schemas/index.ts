@@ -216,6 +216,34 @@ export const BodyMetricResponseSchema = z.object({
   bodyFatPercentage: z.number().optional(),
   createdAt: z.string(),
 });
+//diet
+export const UserTrainDietSchema = z.object({
+  diets: z.array(
+    z.object({
+      id: z.string(),
+      calories: z.number(),
+      protein: z.number(),
+      carbs: z.number(),
+      fat: z.number(),
+    }),
+  ),
+});
+
+export const UpsertBodyDietBodySchema = z.object({
+  calories: z.number(),
+  protein: z.number(),
+  carbs: z.number(),
+  fat: z.number(),
+});
+
+export const BodyDietResponseSchema = z.object({
+  id: z.string(),
+  calories: z.number(),
+  protein: z.number(),
+  carbs: z.number(),
+  fat: z.number(),
+  createdAt: z.string(),
+});
 
 // Log Exercise
 export const setLogExerciseBody = z.object({
