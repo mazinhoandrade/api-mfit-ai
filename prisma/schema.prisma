@@ -130,14 +130,14 @@ model WorkoutExercise {
 }
 
 model ExerciseLog {
-  id         String   @id @default(uuid())
-  sessionId  String
-  exerciseId String
-  notes      String?
-  createdAt  DateTime @default(now())
-
-  session  WorkoutSession  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
-  exercise WorkoutExercise @relation(fields: [exerciseId], references: [id])
+  id                String          @id @default(uuid())
+  sessionId         String
+  exerciseId        String
+  notes             String?
+  createdAt         DateTime        @default(now())
+  restTimeInSeconds Int?
+  session           WorkoutSession  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  exercise          WorkoutExercise @relation(fields: [exerciseId], references: [id])
 
   sets ExerciseSet[]
 
@@ -154,7 +154,7 @@ model ExerciseSet {
   reps              Int?
   durationInSeconds Int?
   distanceInMeters  Int?
-  completed         Boolean @default(false)
+  completed         Boolean @default(true)
 
   createdAt DateTime @default(now())
 }

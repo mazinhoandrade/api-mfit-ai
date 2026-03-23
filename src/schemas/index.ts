@@ -81,6 +81,32 @@ export const CompleteWorkoutSessionSchema = z.object({
   completedAt: z.iso.datetime(),
 });
 
+export const FinishWorkoutSessionBodySchema = z.object({
+  completedAt: z.iso.datetime().optional(),
+  exercises: z.array(
+    z.object({
+      exerciseId: z.string().uuid(),
+      restTimeInSeconds: z.number(),
+      sets: z.array(
+        z.object({
+          order: z.number(),
+          weight: z.number().optional(),
+          reps: z.number().optional(),
+          durationInSeconds: z.number().optional(),
+          distanceInMeters: z.number().optional(),
+        }),
+      ),
+    }),
+  ),
+});
+
+export const CompleteWorkoutSessionsSchema = z.object({
+  id: z.uuid(),
+  startedAt: z.iso.datetime(),
+  completed: z.boolean(),
+  completedAt: z.iso.datetime(),
+});
+
 export const WorkoutPlanDetailsSchema = z.object({
   id: z.uuid(),
   name: z.string(),
@@ -243,22 +269,4 @@ export const BodyDietResponseSchema = z.object({
   carbs: z.number(),
   fat: z.number(),
   createdAt: z.string(),
-});
-
-// Log Exercise
-export const setLogExerciseBody = z.object({
-  weight: z.number().optional(),
-  reps: z.number().optional(),
-  durationInSeconds: z.number().optional(),
-  distanceInMeters: z.number().optional(),
-});
-
-export const setLogExerciseResponse = z.object({
-  id: z.string(),
-  order: z.number(),
-});
-
-export const setLogExerciseCompleteResponse = z.object({
-  id: z.string(),
-  completed: z.boolean(),
 });
